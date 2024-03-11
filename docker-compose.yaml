@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  snowcapped:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/snowcapped
+    working_dir: /snowcapped
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    entrypoint: yarn
+    env_file:
+      - .env
+    depends_on:
+      - snowcapped-db
+  snowcapped-db:
+    image: postgres:14.5
+    container_name: snowcapped-db
+    volumes:
+      - snowcapped-db:/var/lib/postgresql/data
+    ports:
+      - 4005:${POSTGRES_PORT}
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+volumes:
+  snowcapped-db:
+    external: true
