@@ -2,13 +2,13 @@
 
 const { SERVER } = require('../config');
 
-module.exports = async function customer(fastify) {
+module.exports = async function supplier(fastify) {
   fastify.route({
     method: 'POST',
-    url: `${SERVER.API_ROUTE.V1}/customer`,
+    url: `${SERVER.API_ROUTE.V1}/supplier`,
     schema: {
-      summary: 'Create Customer',
-      description: 'Create a new customer.',
+      summary: 'Create Supplier',
+      description: 'Create a new supplier.',
       consumes: ['application/json'],
       produces: ['application/json'],
       body: {
@@ -34,22 +34,22 @@ module.exports = async function customer(fastify) {
         500: { $ref: 'systemErrorResponse#' }
       }
     },
-    handler: async function createCustomer(request, reply) {
-      const customer = request.body;
-      await fastify.customerService.createCustomer(customer);
+    handler: async function createSupplier(request, reply) {
+      const supplier = request.body;
+      await fastify.supplierService.createSupplier(supplier);
       reply
         .code(200)
         .header('Content-Type', 'application/json')
-        .send({ message: 'Customer Created' });
+        .send({ message: 'Supplier Created' });
     }
   });
 
   fastify.route({
     method: 'GET',
-    url: `${SERVER.API_ROUTE.V1}/customer`,
+    url: `${SERVER.API_ROUTE.V1}/supplier`,
     schema: {
-      summary: 'Get customers',
-      description: 'Get all customers.',
+      summary: 'Get suppliers',
+      description: 'Get all suppliers.',
       produces: ['application/json'],
       response: {
         200: {
@@ -74,21 +74,21 @@ module.exports = async function customer(fastify) {
         500: { $ref: 'systemErrorResponse#' }
       }
     },
-    handler: async function getCustomers(request, reply) {
-      const customers = await fastify.customerService.getCustomers()
+    handler: async function getSuppliers(request, reply) {
+      const suppliers = await fastify.supplierService.getSuppliers()
       reply
         .code(200)
         .headers('Content-Type', 'application/json')
-        .send(customers)
+        .send(suppliers)
     }
   });
 
   fastify.route({
     method: 'GET',
-    url: `${SERVER.API_ROUTE.V1}/customer/:id`,
+    url: `${SERVER.API_ROUTE.V1}/supplier/:id`,
     schema: {
-      summary: 'Get customer',
-      description: 'Get customer by Id.',
+      summary: 'Get supplier',
+      description: 'Get supplier by Id.',
       produces: ['application/json'],
       response: {
         200: {
@@ -110,20 +110,20 @@ module.exports = async function customer(fastify) {
         500: { $ref: 'systemErrorResponse#' }
       }
     },
-    handler: async function getCustomers(request, reply) {
-      const customer = await fastify.customerService.getCustomerById(request.params.id);
+    handler: async function getSuppliers(request, reply) {
+      const supplier = await fastify.supplierService.getSupplierById(request.params.id);
       reply
         .code(200)
-        .send(customer)
+        .send(supplier)
     }
   });
 
   fastify.route({
     method: 'PUT',
-    url: `${SERVER.API_ROUTE.V1}/customer/:id`,
+    url: `${SERVER.API_ROUTE.V1}/supplier/:id`,
     schema: {
-      summary: 'Update customer',
-      description: 'Update customer properties.',
+      summary: 'Update supplier',
+      description: 'Update supplier properties.',
       consumes: ['application/json'],
       produces: ['application/json'],
       body: {
@@ -149,25 +149,25 @@ module.exports = async function customer(fastify) {
         500: { $ref: 'systemErrorResponse#' }
       }
     },
-    handler: async function updateCustomer(request, reply) {
+    handler: async function updateSupplier(request, reply) {
       const data = request.body;
       const id = request.params.id;
 
-      await fastify.customerService.updateCustomer(id, data);
+      await fastify.supplierService.updateSupplier(id, data);
 
       reply
         .code(200)
         .header('Content-Type', 'application/json')
-        .send({ message: 'Customer updated' });
+        .send({ message: 'Supplier updated' });
     }
   });
 
   fastify.route({
     method: 'DELETE',
-    url: `${SERVER.API_ROUTE.V1}/customer/:id`,
+    url: `${SERVER.API_ROUTE.V1}/supplier/:id`,
     schema: {
-      summary: 'Delete customer',
-      description: 'Delete customer by Id.',
+      summary: 'Delete supplier',
+      description: 'Delete supplier by Id.',
       produces: ['application/json'],
       response: {
         200: {
@@ -184,15 +184,15 @@ module.exports = async function customer(fastify) {
         500: { $ref: 'systemErrorResponse#' }
       }
     },
-    handler: async function deleteCustomer(request, reply) {
+    handler: async function deleteSupplier(request, reply) {
       const { id } = request.params
 
-      await fastify.customerService.deleteCustomer(id);
+      await fastify.supplierService.deleteSupplier(id);
 
       reply
         .code(200)
         .header('Content-Type', 'application/json')
-        .send({ message: 'Customer deleted' });
+        .send({ message: 'Supplier deleted' });
     }
   });
 };
