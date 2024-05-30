@@ -7,7 +7,8 @@ TABLE_NAMES = {
   suppliers: 'suppliers',
   products: 'products',
   sales: 'sales',
-  expenses: 'expenses'
+  expenses: 'expenses',
+  prices: 'prices'
 };
 
 module.exports = {

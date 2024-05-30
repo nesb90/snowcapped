@@ -1,6 +1,14 @@
 const _ = require('lodash');
 const { POSTGRES } = require('../config');
 
+function getTablePrefix (tableName = '') {
+  return `${tableName.substring(0, 3)}`
+};
+
+function getTableNameWithSchema (tableName) {
+  return `${POSTGRES.SCHEMA}.${tableName}`;
+};
+
 /**
  *
  * @param {String} tableName The table name
@@ -8,7 +16,9 @@ const { POSTGRES } = require('../config');
  * @returns
  */
 function remove (tableName, id) {
-  return `delete from ${POSTGRES.SCHEMA}.${tableName} where id='${id}'`;
+  const tablePrefix = getTablePrefix(tableName)
+  const tableNameWithSchema = getTableNameWithSchema(tableName)
+  return `delete from ${tableNameWithSchema} ${tablePrefix} where ${tablePrefix}.id='${id}'`;
 };
 
 /**
@@ -19,7 +29,7 @@ function remove (tableName, id) {
  * @returns String
  */
 function update (tableName, id, data = {}) {
-  let sql = `UPDATE ${POSTGRES.SCHEMA}.${tableName} SET `;
+  let sql = `UPDATE ${getTableNameWithSchema(tableName)} SET `;
   Object.keys(data).forEach((key) => {
     if (data[key]) {
       sql += `${_.snakeCase(key)}='${data[key]}',`;
@@ -30,7 +40,6 @@ function update (tableName, id, data = {}) {
   return sql
 };
 
-
 /**
  *
  * @param {String} tableName The table name
@@ -39,7 +48,7 @@ function update (tableName, id, data = {}) {
  * @returns Array || String
  */
 function select (tableName, id, props = []) {
-  let query =  `select * from ${POSTGRES.SCHEMA}.${tableName}`;
+  let query =  `select * from ${getTableNameWithSchema(tableName)}`;
 
   if (props.length > 0) {
     const keys = props.map((prop) => {
@@ -74,7 +83,7 @@ function insert (tableName, data) {
     }
   });
 
-  return [`insert into ${POSTGRES.SCHEMA}.${tableName} (${keys}) values (${holders})`, values];
+  return [`insert into ${getTableNameWithSchema(tableName)} (${keys}) values (${holders})`, values];
 };
 
 function parseDataArray (arr = []) {

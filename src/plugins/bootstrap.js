@@ -7,6 +7,7 @@ const DBService = require('../services/db.service');
 const DBPool = require('../db/db.pool');
 const CustomerService = require('../services/customer.service');
 const SupplierService = require('../services/supplier.service');
+const ProductService = require('../services/product.service');
 
 function bootstrap (fastify, opts, done) {
   // Services
@@ -14,11 +15,13 @@ function bootstrap (fastify, opts, done) {
   const dbService = new DBService(dbPool);
   const customerService = new CustomerService({ dbService });
   const supplierService = new SupplierService({ dbService });
+  const productService = new ProductService({ dbService });
   // decorate server
   fastify.decorate('nodeEnv', NODE_ENV);
   // fastify.decorate('dbService', dbService);
   fastify.decorate('customerService', customerService);
   fastify.decorate('supplierService', supplierService);
+  fastify.decorate('productService', productService);
 
   done();
 };
