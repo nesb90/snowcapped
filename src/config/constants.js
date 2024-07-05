@@ -1,8 +1,8 @@
-SALE_TYPES = {
+const SALE_TYPES = {
   RETAIL: 'RETAIL',
   WHOLESALE: 'WHOLESALE'
 };
-TABLE_NAMES = {
+const TABLE_NAMES = {
   customers: 'customers',
   suppliers: 'suppliers',
   products: 'products',
