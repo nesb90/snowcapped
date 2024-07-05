@@ -6,7 +6,7 @@ module.exports = fp(async function (fastify) {
   fastify.addSchema({
     $id: 'unauthorizedResponse',
     type: 'object',
-    required: ['statusCode', 'error', 'message'],
+    required: ['error', 'message'],
     definition: 'Response when the request is not authorized',
     properties: {
       statusCode: { type: 'number' },

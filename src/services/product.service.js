@@ -16,6 +16,7 @@ class ProductService {
     this.productsQuery = `
     SELECT
       pro.id as product_id,
+      pri.id as price_id,
       sup.id as supplier_id,
       sup.name as supplier_name,
       pro.description,
@@ -27,7 +28,7 @@ class ProductService {
     JOIN ${this.schema}.${CONSTANTS.TABLE_NAMES.suppliers} sup
       ON pro.supplier_id = sup.id
     JOIN ${this.schema}.${CONSTANTS.TABLE_NAMES.prices} pri
-      ON pri.product_id = pro.id`;
+      ON pri.product_id = pro.id AND pri.deleted_at IS NULL`;
   };
 
   getDecimalValue(price) {

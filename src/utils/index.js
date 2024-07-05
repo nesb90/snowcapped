@@ -114,6 +114,7 @@ module.exports = {
   parseData,
   parseDataArray,
   formatToISODate,
+  getTableNameWithSchema,
   queryBuilder: {
     insert,
     select,
