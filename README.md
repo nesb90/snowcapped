@@ -1,5 +1,10 @@
 # Snowcapped
 
+## Dependencies
+
+- yarn
+- Docker
+
 ## Set project
 
 ```make
