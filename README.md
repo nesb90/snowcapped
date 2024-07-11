@@ -11,7 +11,7 @@
 make setup
 ```
 
-## Build the project
+## Build project
 
 ```make
 make build
